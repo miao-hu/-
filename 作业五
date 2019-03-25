@@ -1,3 +1,75 @@
+1..完成猜数字游戏。
+
+#define _CRT_SECURE_NO_WARNINGS 1
+#include<stdio.h>
+#include<stdlib.h>
+
+void menu()
+{
+	printf("***************************\n");
+	printf("*******  1.继续玩  ********\n");
+	printf("*******  2.不玩了  ********\n");
+	printf("***************************\n");
+}
+
+void game()
+{
+	int guess = 0;
+	int ret = 0;
+	ret = rand() % 100 + 1;      //产生一个0-100的数
+	
+	while (1)
+	{
+		printf("请猜一个数字:>");
+		scanf("%d", &guess);
+		if (ret > guess)
+			printf("猜小了\n");
+		else if (ret < guess)
+			printf("猜大了\n");
+		else
+		{
+			printf("恭喜你，猜对了\n");
+			break;
+		}
+
+	}
+}
+
+int main()
+{
+	
+	int input=0;
+	int guess=0;
+	
+	do
+	{
+		menu();
+		printf("请选择1或2:>");
+		scanf("%d", &input);
+		switch(input)
+		{
+		case 1:
+				{
+					game();
+					break;
+				}
+			case 2:
+				{
+					 printf("退出游戏\n");
+					break; 
+				}
+			default:
+				{
+					printf("请重新输入\n");
+					break;
+				}
+		}
+
+	} while (input);
+	system("pause");
+	return 0;
+}
+
 
 2.写代码可以在整型有序数组中查找想要的数字，找到了返回下标，找不到返回-1.（折半查找）
 
