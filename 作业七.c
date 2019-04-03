@@ -5,7 +5,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-void table(int num)
+void ShowMutil(int num)
 {
 	int i, j;
 	for (i = 1; i <= num; i++)
@@ -24,7 +24,7 @@ int main()
 	printf("请输入一个数:");
 	scanf("%d", &num);
 	printf("乘法口诀表为：\n");
-	table(num);
+	ShowMutil(num);
 	system("pause");
 	return 0;
 }
@@ -63,7 +63,7 @@ int main()
 #include<stdio.h>
 #include<stdlib.h>
 
-int is_runnian(int year)
+int is_LeapYear(int year)
 {
 	if ((year % 4 == 0 && year % 100 != 0) || year % 400 != 0)
 		return 1;
@@ -76,7 +76,7 @@ int main()
 	int year;
 	printf("请输入一个年份:");
 	scanf("%d", &year);
-	int ret = is_runnian(year);
+	int ret = is_LeapYear(year);
 	if (ret == 1)
 		printf("是闰年\n");
 	else
