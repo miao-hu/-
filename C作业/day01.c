@@ -1,5 +1,6 @@
 1.打印100~200之间的素数
 
+（1）第一种
 #include<stdio.h>
 int main()
 {
@@ -7,6 +8,26 @@ int main()
     for (i = 100; i <= 200; i++)
     {
         for (j = 2; j < i; j++)
+        {
+            if (i%j == 0)
+                break;
+        }
+        if (j==i)
+        printf("%d\n", i);
+         }
+    system("pause");
+    return 0;
+}
+
+（2）第二种
+
+#include<stdio.h>
+int main()
+{
+    int i, j;
+    for (i = 100; i <= 200; i++)
+    {
+        for (j = 2; j < sqrt((double)i); j++)   //sqrt((double)n)为较好的算法
         {
             if (i%j == 0)
                 break;
