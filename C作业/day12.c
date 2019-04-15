@@ -96,6 +96,7 @@ int main()
 #include<stdio.h>
 #include<stdlib.h>
 //一个数异或0为它本身，一个数异或它本身为0        异或相同为0，不同为1
+#if 0
 int main()
 {
 	int arr[] = {  5, 2, 7, 3, 3, 5, 2 };
@@ -104,6 +105,28 @@ int main()
 	system("pause");
 	return 0;
 }
+#endif
+
+int Fun(int *arr, int len)
+{
+	int i, temp = 0;
+	for (i = 0; i < len; i++)
+	{
+		temp ^= arr[i];
+	}
+	return temp;
+}
+int main()
+{
+	int arr[] = { 5, 2, 7, 3, 3, 5, 2 };
+	int len = sizeof(arr) / sizeof(arr[0]);
+	int result = Fun(arr, len);
+	printf("This single number is %d\n", result);
+	system("pause");
+	return 0;
+}
+
+
 4. 
 有一个字符数组的内容为:"student a am i", 
 请你将数组的内容改为"i am a student". 
