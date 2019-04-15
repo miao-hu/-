@@ -96,31 +96,31 @@ int main()
 #include<stdio.h>
 #include<stdlib.h>
 
-void init(int arr[])
+void init(int arr[],int len)
 {
 	int i = 0;
-	for (i = 0; i < 10; i++)
+	for (i = 0; i < len; i++)
 	{
 		arr[i] = i + 1;
 	}
 }
-void empty(int arr[])
+void empty(int arr[],int len)
 {
 	int j = 0;
-	for (j = 0; j< 10; j++)
+	for (j = 0; j< len; j++)
 	{
 		arr[j] =0;
 	}
 }
-void reverse(int arr[])
+void reverse(int arr[],int len)
 {
 	int a[10] = { 0 };
 	int i = 0;
-	for (i = 0; i < 10; i++)
+	for (i = 0; i < len; i++)
 	{
-		a[i] = arr[9 - i];
+		a[i] = arr[len-1- i];
 	}
-	for (i = 0; i < 10; i++)
+	for (i = 0; i < len; i++)
 	{
 		arr[i] = a[i];
 	}
@@ -128,23 +128,24 @@ void reverse(int arr[])
 int main()
 {
 	int arr[10],i;
+	int len=sizeof(arr)/sizeof(arr[0]);        //注意：数组在哪里创建就在哪里求数组长度。传参传递就行
 	printf("初始化数组:\n");
 	init(arr);
-	for ( i = 0; i < 10; i++)
+	for ( i = 0; i < len; i++)
 	{
 		printf("%d ", arr[i]);
 	}
 	printf("\n");
 	printf("数组的逆置:\n");
 	reverse(arr);
-	for (i = 0; i < 10; i++)
+	for (i = 0; i < len; i++)
 	{
 		printf("%d ", arr[i]);
 	}
 	printf("\n");
 	printf("清空数组:\n");
 	empty(arr);
-	for ( i = 0; i < 10; i++)
+	for ( i = 0; i < len; i++)
 	{
 		printf("%d ", arr[i]);
 	}
