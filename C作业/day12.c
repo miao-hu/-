@@ -35,7 +35,8 @@ int InvertArr(int *arr)
 	return sum;
 }
 
-void Printf(int arr[])
+/*
+void Printf(int arr[])                //打印这个数组中的内容
 {
 	int i;
 	for (i = 0; i < 32; i++)
@@ -43,6 +44,8 @@ void Printf(int arr[])
 		printf("%d", arr[i]);
 	}
 }
+*/
+
 int main()
 {
 	unsigned int a;
@@ -55,13 +58,15 @@ int main()
 		arr[i--]=a % 2;
 		a /= 2;
 	}
-	Printf(arr);
-	printf("\n");
-	int ret=InvertArr(arr);
-	printf("%d\n", ret);
+	//Printf(arr);
+	
+	unsigned int ret=InvertArr(arr);
+	printf("%u\n", ret);
 	system("pause");
 	return 0;
-}	
+}
+
+
 2.不使用（a+b）/2这种方式，求两个数的平均值。 
 
 #define _CRT_SECURE_NO_WARNINGS 1
