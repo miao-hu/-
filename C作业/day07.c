@@ -91,13 +91,14 @@ int main()
 #define _CRT_SECURE_NO_WARNINGS 1
 #include<stdio.h>
 #include<stdlib.h>
+
+#if 0
 void DigitSum(unsigned int n,unsigned int *sum)
 {
 	if (n > 9)
-		 DigitSum(n / 10,sum);
+		DigitSum(n / 10,sum);
 
-		(*sum)+=n % 10;
-
+	(*sum)+=n % 10;
 }
 int main()
 {
@@ -109,6 +110,28 @@ int main()
 	system("pause");
 	return 0;
 }
+#endif
+
+
+int DigitSum(unsigned int n)
+{
+	if (n < 10)
+		return n;
+	else
+		return DigitSum(n / 10) + n % 10;
+	
+}
+int main()
+{
+	unsigned long n;
+	printf("请输入一个数:");
+	scanf("%d", &n);
+	int ret=DigitSum(n);
+	printf("%d", ret);
+	system("pause");
+	return 0;
+}
+
 
 4. 编写一个函数reverse_string(char * string)（递归实现）
 实现：将参数字符串中的字符反向排列。
