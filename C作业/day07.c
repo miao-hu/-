@@ -1,3 +1,7 @@
+递归：1.递归要有终止条件
+     2.自己调用自己
+
+
 1.递归和非递归分别实现求第n个斐波那契数。
 
 #pragma warning(disable:4996)     
@@ -30,27 +34,26 @@ int main()
 
 //迭代法
 #if 0
-int fib(int n)
+int Fabonaci(int n)
 {
-	int first = 1;
-	int second = 1;
-	int third = 1;
-	int i = 2;
-	while (i<n)
+	int f1 = 1;
+	int f2 = 1;
+	int f3 = 1;
+	int i ;
+	for(i=3;i<=n;i++)
 	{
-		third = first + second;
-		first=second;
-		second=third;
-		i++;
+		f3=f2+f1;
+		f1=f2;
+		f2=f3;
 	}
-	return third;
+	return f3;
 }
 int main()
 {
 	int n;
 	printf("请输入一个数:");
 	scanf("%d", &n);
-	int ret = fib(n);
+	int ret = Fabonaci(n);
 	printf("result=%d\n", ret);
 	system("pause");
 	return 0;
@@ -59,6 +62,7 @@ int main()
 
 2.编写一个函数实现n^k，使用递归实现
 
+#if 0
 #define _CRT_SECURE_NO_WARNINGS 1
 #include<stdio.h>
 #include<stdlib.h>
@@ -85,6 +89,31 @@ int main()
 	system("pause");
 	return 0;
 }
+#enf if
+
+
+//第二种方法
+#define _CRT_SECURE_NO_WARNINGS 1
+#include<stdio.h>
+#include<stdlib.h>
+int POW(int n, int k)
+{
+	if (k == 0)
+		return 1;
+	else
+		return n*POW(n, k - 1);
+}
+int main()
+{
+	int n = 0, k = 0;
+	printf("请输入两个数:");
+	scanf("%d %d", &n, &k);
+	int ret = POW(n, k);
+	printf("%d\n", ret);
+	system("pause");
+	return 0;
+}
+
 
 3. 写一个递归函数DigitSum(n)，输入一个非负整数，返回组成它的数字之和，例如，调用DigitSum(1729)，则应该返回1+7+2+9，它的和是19
 
@@ -196,7 +225,7 @@ int main()
 #if 0
 int strlen(const char *str,int count)
 {
-	assert(str);         //检测字符串是否成立，
+	assert(str);         //检测字符串是否成立， //assert(str!=NULL);
 	while (*str != '\0')
 	{
 		count++;
