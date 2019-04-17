@@ -73,7 +73,8 @@ int main()
 #include<stdio.h>
 #include<stdlib.h>
 
-float average(float a, float b)
+#if 0
+float Average(float a, float b)
 {
 	return a+(b-a)/2;
 }
@@ -82,8 +83,24 @@ int main()
 	float a, b;
 	printf("请输入两个数:");
 	scanf("%f %f", &a, &b);
-	float ret = average(a, b);
+	float ret = Average(a, b);
 	printf("ret=%f\n", ret);
+	system("pause");
+	return 0;
+}
+#endif
+
+int Average(int a, int b)
+{
+	return (a&b) + (a^b) >> 1;
+}
+int main()
+{
+	int a, b;
+	printf("请输入两个数:");
+	scanf("%d %d", &a, &b);
+	int ret = Average(a, b);
+	printf("ret=%d\n", ret);
 	system("pause");
 	return 0;
 }
