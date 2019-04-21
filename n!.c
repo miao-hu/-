@@ -2,7 +2,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 
-//µü´ú·¨(Ñ­»·)
+//è¿­ä»£æ³•(å¾ªç¯)
 #if 0
 int fac(int n)
 {
@@ -17,7 +17,7 @@ int fac(int n)
 int main()
 {
 	int n;
-	printf("ÇëÊäÈën£º");
+	printf("è¯·è¾“å…¥nï¼š");
 	scanf("%d", &n);
 	int ret=fac(n);
 	printf("%d\n", ret);
@@ -26,7 +26,7 @@ int main()
 }
 #endif
 
-//µİ¹é·¨
+//é€’å½’æ³•
 int fac(int n)
 {
 	if (n == 1)
@@ -37,7 +37,7 @@ int fac(int n)
 int main()
 {
 	int n;
-	printf("ÇëÊäÈën£º");
+	printf("è¯·è¾“å…¥nï¼š");
 	scanf("%d", &n);
 	int ret = fac(n);
 	printf("%d\n", ret);
