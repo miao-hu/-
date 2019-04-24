@@ -9,6 +9,8 @@
 #include<stdio.h>
 #include<stdlib.h>
 
+//第一种
+#if 0
 void swap(int arr[],int sz)
 {
 	int arr1[10] = { 0 };
@@ -32,7 +34,6 @@ void swap(int arr[],int sz)
 		arr[i] = arr1[i];
 	}
 }
-
 int main()
 {
 	int arr[10] = { 0 };
@@ -50,7 +51,61 @@ int main()
 	system("pause");
 	return 0;
 }
+#endif
 
+//第二种
+void swap(int arr[], int sz)
+{
+	int left = 0;
+	int right = sz - 1;
+	while (left < right)
+	{
+		while (left < right&&arr[left] % 2 == 1)
+		{
+			left++;
+		}
+		while (left < right&&arr[right] % 2 == 0)
+		{
+			right--;
+		}
+		if (left < right)
+		{
+			int temp = arr[left];
+			arr[left] = arr[right];
+			arr[right]= temp;
+		}
+	}
+}
+void show(int arr[], int sz)
+{
+	int i;
+	for (i = 0; i < sz; i++)
+	{
+		printf("%d ", arr[i]);
+	}
+	printf("\n");
+}
+void init(int arr[], int sz)
+{
+	int i = 0;
+	for (i = 0; i <sz; i++)        //数组赋值1 2 3 4 5 6 7 8 9 10
+		arr[i] = i + 1;
+}
+int main()
+{
+	int arr[10] = { 0 };
+	int sz = sizeof(arr) / sizeof(arr[0]);
+	init(arr, sz);
+	printf("原数组：");
+	show(arr, sz);
+
+	swap(arr, sz);
+
+	printf("现数组：");
+	show(arr, sz);
+	system("pause");
+	return 0;
+}
 
 2. 
 //杨氏矩阵 
