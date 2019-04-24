@@ -6,7 +6,38 @@ ABCD左旋两个字符得到CDAB
 #define _CRT_SECURE_NO_WARNINGS 1
 #include <stdio.h>
 #include <stdlib.h>
+#include<string.h>
+#include<assert.h>
+
+#if 0
+//第一种方法
 void LeftMove(char *str)
+{
+	int k;
+	printf("请输入左旋次数:");
+	scanf("%d", &k);
+	if (k<0 || k>strlen(str))
+	{
+		printf("k值不合法\n");
+		return;
+	}
+	while (k != 0)
+	{
+		char *cur = str;
+		char temp = *cur;
+		while((*(cur+ 1)) != '\0')
+		{
+			*cur = *(cur + 1);
+			cur++;
+		}
+		*cur = temp;
+		k--;
+	}
+}
+
+
+/*
+void LeftMove2(char *str)
 {
 	int k,i;
 	printf("请输入左旋次数:");
@@ -22,12 +53,48 @@ void LeftMove(char *str)
 		}
 		*(str + j) = temp;
 	}
+*/
+
+int main()
+{
+	char str[] = "ABCD";        
+	printf("%s\n", str);
+	LeftMove(str);
+	printf("%s\n", str);
+	system("pause");
+	return 0;
+}
+#endif
+
+
+//第二种方法
+void Reverse(char *left, char *right)
+{
+	assert(left != NULL&&right != NULL);
+	while (left < right)
+	{
+		char temp = *left;
+		*left = *right;
+		*right = temp;
+		left++;
+		right--;
+	}
+}
+void LeftMove(char str[],int k)
+{
+	int len = strlen(str);
+	Reverse(str, str + k - 1);
+	Reverse(str + k, str + len - 1);
+	Reverse(str, str + len - 1);
 }
 int main()
 {
 	char str[] = "ABCD";
+	int k;
+	printf("请输入左旋次数:");
+	scanf("%d", &k);
 	printf("%s\n", str);
-	LeftMove(str);
+	LeftMove(str,k);
 	printf("%s\n", str);
 	system("pause");
 	return 0;
