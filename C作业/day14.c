@@ -83,23 +83,28 @@ void Reverse(char *left, char *right)
 void LeftMove(char str[],int k)
 {
 	int len = strlen(str);
+	if ((k<0 )||( k>strlen(str)))
+	{
+		printf("k的值不合理\n");
+		return;
+	}
 	Reverse(str, str + k - 1);
 	Reverse(str + k, str + len - 1);
 	Reverse(str, str + len - 1);
 }
 int main()
 {
-	char str[] = "ABCD";
-	int k;
-	printf("请输入左旋次数:");
-	scanf("%d", &k);
-	printf("%s\n", str);
+	char str[] = "ABCDEF";             //abdcef   k=2
+	int k;                           //badcef 
+	printf("请输入左旋次数:");       //bafecd
+	scanf("%d", &k);                 //dcefab
+	printf("原字符串：%s\n", str);
 	LeftMove(str,k);
-	printf("%s\n", str);
+	printf("现字符串:%s\n", str);
 	system("pause");
 	return 0;
-}
-
+}	
+	
 
 2.判断一个字符串是否为另外一个字符串旋转之后的字符串。 
 例如：给定s1 =AABCD和s2 = BCDAA，返回1 
@@ -115,6 +120,9 @@ AABCD右旋一个字符得到DAABC
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+
+//第一种
+#if 0
 int LeftMove(char *str1,char *str2,int len)
 {
 	int i;
@@ -163,3 +171,108 @@ int main()
 	system("pause");
 	return 0;
 }
+#endif
+
+//第二种
+#if 0
+void LeftMove(char *str, int k)
+{
+	if (k < 0 || k > strlen(str))
+	{
+		printf("k值不合法\n");
+		return;
+	}
+	while (k != 0)
+	{
+		char *cur = str;
+		char tmp = *cur;
+		while (*(cur + 1) != '\0')
+		{
+			*cur = *(cur + 1);
+			cur++;
+		}
+		*cur = tmp;
+		k--;
+	}
+}
+int is_LeftMove(char *str1, const char *str2)
+{
+	int i = 0;
+	if (strlen(str1) != strlen(str2))
+	{
+		return 0;
+	}
+	for (i = 1; i <= strlen(str1); i++)
+	{
+		LeftMove(str1,1);   //是在上一次移动的基础上进行的下一次移动
+		if (strcmp(str1, str2) == 0)  //两个字符串相等
+		{
+			return 1;
+		}
+	}
+	return 0;
+}
+int main()
+{
+	char str1[] = "ABCDEF";
+	char str2[] = "CDEFAB";
+	int ret = is_LeftMove(str1, str2);
+	if (1 == ret)
+	{
+		printf("str2是str1旋转后的字符串\n");
+	}
+	else
+	{
+		printf("str2不是str1旋转后的字符串\n");
+	}
+	system("pause");
+	return 0;
+}
+#endif
+
+//第三种
+int is_LeftMove(char *str1, const char *str2)
+{
+	if (strlen(str1) != strlen(str2))
+	{
+		return 0;
+	}
+	strncat(str1, str1, strlen(str1)); 
+	//printf("%s\n", str1);
+	/*
+	1.char *strncat(char *strDestination,const char *strSource,size_t count );
+	------将strSource的count个字符，拼接到strDestination后边
+	2.char *strcat(char *strDestination,const char *strSource);
+	------把strSource拼接到strDestination后边
+	3.char *strstr(const char *str, const char *strSearch );
+	------在str里边，查找字符串strSearch
+	*/
+	if (strstr(str1, str2) == NULL)  //strstr 查找字符串
+	{
+		return 0;
+	}
+	else
+		return 1;
+}
+int main()
+{
+	char str1[20] = "ABCDEF";   //这个数组必须足够大
+	char str2[] = "CDEFAB";
+	/*	
+		char *p = strncat(str1, str2, 3);  
+		printf("%s\n", p);                        //ABCDEFCDE
+		printf("%s\n", strncat(str1, str2, 3));   //ABCDEFCDECDE
+	*/
+	int ret = is_LeftMove(str1, str2);
+	if (1 == ret)
+	{
+		printf("str2是str1旋转后的字符串\n");
+	}
+	else
+	{
+		printf("str2不是str1旋转后的字符串\n");
+	}
+	system("pause");
+	return 0;
+}
+	
