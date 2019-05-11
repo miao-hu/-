@@ -1,8 +1,9 @@
 1. 给定两个整形变量的值，将两个值的内容进行交换。 
 
+//第一种 
+#if 0
   #define _CRT_SECURE_NO_WARNINGS 1
   #include<stdio.h>
-
   int main()
   {
     int a=5, b=8;
@@ -17,6 +18,47 @@
     return 0;
 
   }
+#endif
+
+
+//第二种
+#define _CRT_SECURE_NO_WARNINGS 1
+#include<stdio.h>
+#include<stdlib.h>
+int main()
+{
+	int a = 6, b = 8;
+	printf("%d %d\n", a, b);
+	a = a^b;
+	b = a^b;
+	a = a^b;
+	printf("%d %d\n", a, b);
+	system("pause");
+	return 0;
+}
+
+//第三种
+#define _CRT_SECURE_NO_WARNINGS 1
+#include<stdio.h>
+#include<stdlib.h>
+
+void Swap(int *m, int *n)                    //注意：传地址才可以改变变量的值
+{
+	int tmp;
+	tmp = *m;
+	*m= *n;
+	*n= tmp;
+}
+
+int main()
+{
+	int a = 3, b = 6;
+	printf("%d %d\n", a, b);
+	Swap(&a, &b);
+	printf("%d %d\n", a, b);
+	system("pause");
+	return 0;
+}
 
 
 2. 不允许创建临时变量，交换两个数的内容（附加题） 
@@ -30,6 +72,7 @@
     printf("%d,%d\n",a[0], a[1]);
     system("pause");
   }
+
 
 3.求10 个整数中最大值。
   #include<stdio.h>
