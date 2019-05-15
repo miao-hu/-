@@ -4,6 +4,7 @@
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+#include<assert.h>
 /*
 strcpy，即string copy（字符串复制）的缩写。
 strcpy是一种C语言的标准库函数，strcpy把含有'\0'结束符的字符串复制到另一个地址空间
@@ -13,6 +14,10 @@ strcpy是一种C语言的标准库函数，strcpy把含有'\0'结束符的字符
 说明：src和dest所指内存区域不可以重叠且dest必须有足够的空间来容纳src的字符串。
 返回:指向dest的指针。
 */
+
+
+//第一种
+#if 0
 void my_strcpy(char *arr1)
 
 {
@@ -30,6 +35,39 @@ int main()
 	system("pause");
 	return 0;
 }
+#endif
+
+//第二种
+char *Mystrcpy(char *dest, const char *src)
+{
+	assert(dest);
+	assert(src);
+	/*
+	char *p = dest;   //因为dest的值会发生变化，所以应该将其赋予另一个变量记录起始位置
+	while (*src != '\0')
+	{
+		*dest = *src;
+		dest++;
+		src++;
+	}
+	*dest = '\0';
+	return p;
+	*/
+	char *p = dest;
+	while (*dest++ = *src++)
+	{
+	}
+	return p;
+}
+int main()
+{
+	char dest[20] = { 0 };
+	char *src = "abcde";
+	Mystrcpy(dest, src);
+	printf("%s\n", dest);
+	system("pause");
+	return 0;
+}
 
 
 2.实现strcat 
@@ -38,6 +76,7 @@ int main()
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+#include<assert.h>
 /*
 原型:extern char *strcat(char *dest, const char *src);
 功能:把src所指向的字符串（包括“\0”）复制到
@@ -46,6 +85,9 @@ dest所指向的字符串后面（删除*dest原来末尾的“\0”）。
 返回指向dest的指针。
 说明:src和dest所指内存区域不可以重叠且dest必须有足够的空间来容纳src的字符串。
 */
+
+//第一种
+#if 0
 void my_strcat(char *arr1, const char *arr2,int len1,int len2)
 {
 	int i = 0,j=0;
@@ -63,6 +105,32 @@ int main()
 	int len1 = sizeof(arr1) / sizeof(arr1[0]);
 	int len2 = sizeof(arr2) / sizeof(arr2[0]);
 	my_strcat(arr1,arr2,len1,len2);
+	system("pause");
+	return 0;
+}
+#endif
+
+//第二种
+char *Mystrcat(char *dest, const char *src)
+{
+	assert(dest);
+	assert(src);
+	char *p = dest;
+	while (*dest != '\0')
+	{
+		dest++;
+	}
+	while (*dest++ = *src++)
+	{
+	}
+	return p;
+}
+int main()
+{
+	char dest[20] = "Hello";
+	char *src= "  bit";
+	Mystrcat(dest, src);
+	printf("%s\n", dest);
 	system("pause");
 	return 0;
 }
