@@ -139,13 +139,17 @@ int main()
 3.实现strstr 
 
 #define _CRT_SECURE_NO_WARNINGS 1
-#include<stdio.h>
+#include<stdio.h>      //朴素算法   KMP也是查找子串
 #include<stdlib.h>
 #include<string.h>
+#include<assert.h>
 /*
 strstr(str1,str2) 函数用于判断字符串str2是否是str1的子串。
 如果是，则该函数返回str2在str1中首次出现的地址；否则，返回NULL
 */
+
+//第一种
+#if 0
 int my_strstr(char *arr1, char * arr2, int  len1, int len2)
 {
 	unsigned int i, j,ret;
@@ -190,6 +194,75 @@ int main()
 	system("pause");
 	return 0;
 }
+#endif
+
+
+//第二种
+
+//这个不全
+//const char *Mystrstr1(const char *str1, const char *str2)
+//{
+//	assert(str1);
+//	assert(str2);
+//	while(*str1 != '\0')
+//	{
+//		const char *p = str1;
+//		while (*str1 != '\0'&&*str2 != '\0'&&*str1 == *str2)
+//		{
+//			str1++;
+//			str2++;
+//		}
+//		if (*str1 == '\0')
+//		{
+//			return NULL;
+//		}
+//		if (*str2 == '\0')
+//		{
+//			return p;
+//		}
+//		str1++;
+//	}
+//	return NULL;
+//}
+
+//这个全面
+const char *Mystrstr(const char *str1, const char *str2)
+{
+	assert(str1);
+	assert(str2);
+	const char *s1 = NULL;
+	const char *s2 = NULL;
+	const char *start = str1;   //start记录每一次匹配的起始位置
+	while (start != '\0')
+	{
+		s1 = start;  //s1回退到上一次匹配的下一个位置
+		s2 = str2;   //每一次匹配子串都要从头开始，s2回退到str2的起始位置
+		while (*s1 != '\0'&&*s2 != '\0'&&*s1 == *s2)
+		{
+			s1++;
+			s2++;
+		}
+		if (*s1=='\0')
+		{
+			return NULL;
+		}
+		if (*s2 == '\0')
+		{
+			return start;
+		}
+		start++;   //上一次匹配位置加1
+	}
+	return NULL;
+}
+
+int main()
+{
+	char *dest = "abbbcdef";  //主串
+	char *src = "bbc";     //字串
+	printf("%s\n", Mystrstr(dest, src));
+	system("pause");
+	return 0;
+}
 
 
 4.实现strchr 
@@ -198,6 +271,7 @@ int main()
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
+#include<assert.h>
 /*
 char *strchr(const char* _Str,char _Val)
 char *strchr(char* _Str,char _Ch)
@@ -207,6 +281,10 @@ char *strchr(char* _Str,char _Ch)
 	  如果Str中不存在Val则返回NULL。
 返回值：成功则返回要查找字符第一次出现的位置，失败返回NULL
 */
+
+
+//第一种
+#if 0
 int my_strchr(const char* arr, char key, int len)
 {
 	int i = 0;
@@ -234,9 +312,33 @@ int main()
 	system("pause");
 	return 0;
 }
+#endif
+
+//第二种
+const char *Mystrchr(const char *dest, char ch)
+{
+	assert(dest);
+	while (*dest != '\0')
+	{
+		if (*dest == ch)
+		{
+			return dest;
+		}
+		dest++;
+	}
+	return NULL;
+}
+int main()
+{
+	char *dest = "Hellobit";
+	printf("pos=%p\n",Mystrchr(dest, 'z'));
+	system("pause");
+	return 0;
+}
 
 
 5.实现strcmp 
+
 
 #define _CRT_SECURE_NO_WARNINGS 1
 #include<stdio.h>
@@ -251,6 +353,10 @@ int main()
 即：两个字符串自左向右逐个字符相比（按ASCII值大小相比较）
 	直到出现不同的字符或遇'\0'为止。如：
 */
+
+
+//第一种
+#if 0
 int my_strcmp(char *arr1, char* arr2, int len)
 {
 	assert(arr1 != NULL);
@@ -290,6 +396,40 @@ int main()
 	system("pause");
 	return 0;
 }
+#endif
+
+//第二种
+int Mystrcmp(const char *str1, const char *str2)
+{
+	assert(str1);
+	assert(str2);
+	while (*str1 == *str2)
+	{
+		if (*str1 == '\0')  //*str1为'\0'那么*str2也为'\0'
+		{
+			return 0;
+		}
+		str1++;
+		str2++;
+	}
+	if (*str1 > *str2)
+	{
+		return 1;
+	}
+	else
+	{
+		return -1;
+	}
+
+}
+int main()
+{
+	printf("%d\n",Mystrcmp("abcde","abcdef" ));
+	printf("%d\n",Mystrcmp("abcde", "abcda"));
+	printf("%d\n",Mystrcmp("abcde", "abcdz"));
+	system("pause");
+	return 0;
+}	
 
 
 6.实现memcpy
@@ -308,6 +448,10 @@ memcpy指的是c和c++使用的内存拷贝函数
 如果目标数组destin本身已有数据，
 执行memcpy()后，将覆盖原有数据（最多覆盖n）
 */
+
+
+//第一种
+#if 0
 void my_memcpy(char *arr1, const char *arr2, int n)
 {
 	assert(arr1 != NULL);
@@ -329,6 +473,64 @@ int main()
 	system("pause");
 	return 0;
 }
+#endif
+
+
+//第二种
+#if 0
+void *Mymemcpy(void *dest, const void *src, int count)  //count为字节数
+{
+	assert(dest);
+	assert(src);
+	while (count != 0)         //一个字节一个字节拷贝
+	{
+		*((char *)dest) = *((char *)src);
+		((char *)dest)++;
+		((char *)src)++;
+		count--;
+	}
+}
+int main()
+{
+	int arr[] = { 1, 2, 3, 4, 5, 6, 7 };
+	Mymemcpy(arr, arr+2, 16);     //3 4 5 6 5 6 7
+	for (int i = 0; i < 7; i++)
+	{
+		printf("%d ", arr[i]);
+	}
+	system("pause");
+	return 0;
+}
+#endif
+
+
+//第三种
+const void *Mymemcpy(void *dest, const void *src, int count)  //count为字节数
+{
+	assert(dest);
+	assert(src);
+	const void *pp = src;
+	while (count != 0)         //一个字节一个字节拷贝
+	{
+		*((char *)dest) = *((char *)src);
+		((char *)dest)++;
+		((char *)src)++;
+		count--;
+	}
+	return pp;
+}
+int main()
+{
+	int arr[] = { 1, 2, 3, 4, 5, 6, 7 };
+	int *p=(int *)Mymemcpy(arr+2, arr, 16);        //1 2 1 2 1 2 7
+	for (int i = 0; i < 7; i++)
+	{
+		printf("%d ", p[i]);   //等同*(p+i)
+	}
+	system("pause");
+	return 0;
+}
+
 
 
 7.实现memmove 
@@ -346,7 +548,10 @@ int main()
 	但复制后源内容会被更改。
 	但是当目标区域与源区域没有重叠则和memcpy函数功能相同。
 */
+
+
 //第一种
+#if 0
 void my_memmove(char *dest, const char *src, int n)
 {
 	assert(dest != NULL);
@@ -378,6 +583,8 @@ int main()
 	system("pause");
 	return 0;
 }
+#endif
+
 
 //第二种
 //void my_memmove(int *p1, int const *p2, size_t count)
@@ -414,4 +621,161 @@ int main()
 //	system("pause");
 //	return 0;
 //}
-//		
+//	
+
+
+//第三种
+#if 0
+void *Mymemmove(void *dest, const void *src, int count)
+{
+	assert(dest);
+	assert(src);
+	void *p = dest;
+	if (src > dest)
+	{
+		while (count != 0)
+		{
+			*((char *)dest)= *((char *)src);
+			((char *)dest)++;
+			((char *)src)++;
+			count--;
+		}
+	}
+	else
+	{
+		while (count--)
+		{
+			*((char *)dest+count)= *((char *)src+count);
+		}
+	}
+	return p;
+}
+int main()
+{
+
+	int arr[] = { 1,2,3,4,5,6,7};
+	Mymemmove(arr + 2, arr, 16);     //1 2 1 2 3 4 7
+	for (int i = 0; i < 7; i++)
+	{
+		printf("%d ", arr[i]);
+	}
+	system("pause");
+	return 0;
+}
+#endif
+
+
+//第四种
+void *Mymemmove(void *dest, const void *src, int count)
+{
+	assert(dest);
+	assert(src);
+	void *p = dest;
+	if (src > dest)
+	{
+		while (count--)
+		{
+			*((char *)dest)= *((char *)src);
+			((char *)dest)++;
+			((char *)src)++;
+		}
+	}
+	else
+	{
+		while (count--)
+		{
+			*((char *)dest + count) = *((char *)src + count);   //count:0-15
+		}
+	}
+	return p;
+}
+int main()
+{
+
+	int arr[] = { 1, 2, 3, 4, 5, 6, 7 };
+	Mymemmove(arr , arr+2, 16);     //3 4 5 6 5 6 7
+	for (int i = 0; i < 7; i++)
+	{
+		printf("%d ", arr[i]);
+	}
+	system("pause");
+	return 0;
+}
+
+
+8.实现strncpy
+
+
+#define _CRT_SECURE_NO_WARNINGS 1
+#include<stdio.h>
+#include<stdlib.h>
+#include<assert.h>
+char *Mystrncpy(char *dest, const char *src,int n)
+{
+	assert(dest);
+	assert(src);
+	char *p = dest;
+	while (n>0)
+	{
+	*dest = *src;
+	dest++;
+	src++;
+	n--;
+	}
+	*dest = '\0';
+	return p;
+	
+	/*
+	char *p = dest;
+	while (n>0 && (*dest++ = *src++))
+	{
+		n--;
+	}
+	return p;
+	*/
+}
+int main()
+{
+	char dest[20] = { 0 };
+	char *src = "abcde";
+	Mystrncpy(dest, src,2);
+	printf("%s\n", dest);
+	system("pause");
+	return 0;
+}
+
+9.实现strncat
+
+#define _CRT_SECURE_NO_WARNINGS 1
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<assert.h>
+
+char *Mystrncat(char *dest, const char *src, int n)
+{
+	assert(dest);
+	assert(src);
+	char *p = dest;
+	while (*dest != '\0')
+	{
+		dest++;
+	}
+	while (n>0 &&(*dest++ = *src++))
+	{
+		n--;
+	}
+	return p;
+}
+int main()
+{
+	char dest[20] = "Hello";
+	char *src = "bittttttt";
+	Mystrncat(dest, src,5);
+	printf("%s\n", dest);
+	system("pause");
+	return 0;
+}
+
+
+
