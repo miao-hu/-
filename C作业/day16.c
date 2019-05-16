@@ -779,3 +779,32 @@ int main()
 
 
 
+10.实现strncmp
+
+
+#define _CRT_SECURE_NO_WARNINGS 1
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<assert.h>
+
+int Mystrncmp(const char *str1, const char *str2, int n)
+{
+	assert(str1);
+	assert(str2);
+	while (*str1 && *str2 && (*str1 == *str2) && (--n))
+	{
+		str1++;
+		str2++;
+	}
+	return *str1 - *str2;
+}
+int main()
+{
+	printf("%d\n", Mystrncmp("abcde", "abcdef",3));
+	printf("%d\n", Mystrncmp("abcd", "abca",4));
+	printf("%d\n", Mystrncmp("abcde", "abcdz",5));
+	system("pause");
+	return 0;
+}
+
