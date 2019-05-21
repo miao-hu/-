@@ -29,43 +29,47 @@ int main()
 #define _CRT_SECURE_NO_WARNINGS 1
 #include<stdio.h>
 #include<stdlib.h>
+#include<string.h>
+
 int main()
 {
 	int line = 0;
-	scanf("%d", &line);    //7
 	int i = 0;
-	//上半部分
+	int j = 0;
+	int k = 0;
+	scanf("%d", &line);
+	
+	//上半部分+最中间的部分
 	for (i = 0; i < line; i++)
 	{
-		int j = 0;
-		for (j = 0; j < line - 1 - i; j++)
+		for (j = 0; j < line-1-i; j++)
 		{
 			printf(" ");
 		}
-		for (j = 0; j <= 2 * i + 1; j++)
+		for (k = 0; k <2*i+1; k++)
 		{
 			printf("*");
 		}
 		printf("\n");
 	}
+	
 	//下半部分
-	for (i = 0; i < line - 1; i++)
+	for (i = 0; i < line; i++)
 	{
-		int j = 0;
-		for (j = 0; j <= i; j++)
+		for (j = 0; j <=i; j++)
 		{
 			printf(" ");
 		}
-		for (j = 0; j < 2 * (line - 1 - i) - 1; j++)
+		for (k = 0; k < 2 * (line - i - 1)-1; k++)
 		{
 			printf("*");
 		}
 		printf("\n");
 	}
-
 	system("pause");
 	return 0;
 }
+
 
 2.求出0～999之间的所有“水仙花数”并输出。 
 “水仙花数”是指一个三位数，其各位数字的立方和确好等于该数本身，如；153＝1＋5＋3?，则153是一个“水仙花数”。 
