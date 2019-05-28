@@ -9,6 +9,8 @@ free
 #define _CRT_SECURE_NO_WARNINGS 1
 #include<stdio.h>
 #include<stdlib.h>
+#include<string.h>
+#include<errno.h>
 
 
 //malloc:
@@ -18,13 +20,17 @@ int main()
 	int num = 0;
 	scanf("%d", &num);
 	int *p = (int *)malloc(sizeof(int)*num);
-	if (p != NULL)
+	if (p != NULL)      //申请成功
 	{
 		int i = 0;
 		for (i = 0; i < num; i++)
 		{
 			p[i] = i;
 		}
+	}
+	else    //申请不成功
+	{
+		printf("%d : %s\n", errno, strerror(errno));
 	}
 	free(p);
 	p = NULL;
@@ -48,6 +54,10 @@ int main()
 		{
 			p[i] = i;
 		}
+	}
+	else    //申请不成功
+	{
+		printf("%d : %s\n", errno, strerror(errno));
 	}
 	free(p);
 	p = NULL;
@@ -73,6 +83,10 @@ int main()
 	if (p != NULL)
 	{
 		ptr = p;
+	}
+	else    //申请不成功
+	{
+		printf("%d : %s\n", errno, strerror(errno));
 	}
 	free(ptr);
 	ptr = NULL;
