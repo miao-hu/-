@@ -67,7 +67,9 @@ int main()
 #endif
 
 
+
 //realloc：
+//第一种
 int main()
 {
 	int *ptr = malloc(100);
@@ -93,4 +95,36 @@ int main()
 	system("pause");
 	return 0;
 }
+
+
+
+//第二种
+int main()
+{
+	char *p = malloc(sizeof(char)* 100);
+	if (!p)
+	{
+		printf("malloc error\n");
+		return 1;
+	}
+	memset(p, 'A', sizeof(char)* 100);
+	char *q = realloc(p, sizeof(char)* 50);  //内存变小，指针和原来一样
+	//char *q = realloc(p, sizeof(char)* 1000);  //内存变大
+	//释放原空间，重新开始一大块内存，指针发生变化
+	if (!q)
+	{
+		printf("realloc error\n");
+		return 0;
+	}
+	printf("%p,%p\n",p, q);
+	int i = 0;
+	for (; i < 50; i++)
+	{
+		printf("%c ", p[i]);
+	}
+	free(q);
+	system("pause");
+	return 0;
+}
+
 
