@@ -14,46 +14,50 @@ int count_one_bits(unsigned int value)
 
 //第一种
 #if 0
-int main()
+int  count_one_bits1(unsigned int num)     //unsigened有无都可以
 {
 	int count = 0;
-	int i;
-	printf("请输入一个数:");
-	scanf("%d", &i);
-	while (i != 0)
+	while (num != 0)
 	{
-		if (i % 2 == 1)
+		if (num% 2 == 1)
 		{
 			count++;
-			i = i / 2;
 		}
-		else  i = i / 2;        //i=i>>1;
+		num= num / 2;        //或者i=i>>1;
 	}
+	return count;
+}
+int main()
+{
+	int num;
+	printf("请输入一个数:");
+	scanf("%d", &num);
+	int count=count_one_bits1(num);
 	printf("count=%d\n", count);
 	system("pause");
 	return 0;
 }
-#endif 
+#endif
 
 
 //第二种
 #if 0
-int  count_one_bits(unsigned int n)     //unsigened有无都可以
+int  count_one_bits2(unsigned int num)     //unsigened有无都可以
 {
 	int count = 0;
-	while (n != 0)
+	while (num != 0)
 	{
-		n = n&(n - 1);
+		num = num&(num- 1);    //有几个1就循环几次，效率高
 		count++;
 	}
 	return count;
 }
 int main()
 {
-	int n;
+	int num;
 	printf("请输入一个数:");
-	scanf("%d", &n);
-	int count = count_one_bits(n);
+	scanf("%d", &num);
+	int count = count_one_bits2(num);
 	printf("count=%d\n", count);
 	system("pause");
 	return 0;
@@ -62,26 +66,27 @@ int main()
 
 
 //第三种
-int  count_one_bits(unsigned int n)
+int  count_one_bits3(unsigned int num)
 {
 	int count = 0;
-	for (int i = 0; i < 32; i++)
+	for (int i = 0; i < 31; i++)
 	{
-		if (((n >> i) & 1) == 1)
+		if (((num >> i) & 1) == 1)
 			count++;
 	}
 	return count;
 }
 int main()
 {
-	int n;
+	int num;
 	printf("请输入一个数:");
-	scanf("%d", &n);
-	int count = count_one_bits(n);
+	scanf("%d", &num);
+	int count = count_one_bits3(num);
 	printf("count=%d\n", count);
 	system("pause");
 	return 0;
 }
+
 
 
 2.获取一个数二进制序列中所有的偶数位和奇数位， 
@@ -90,6 +95,9 @@ int main()
 #define _CRT_SECURE_NO_WARNINGS 1
 #include<stdio.h>
 #include<stdlib.h>
+
+//第一种
+#if 0
 int main()
 {
 	int arr[32] = { 0 };
@@ -125,6 +133,35 @@ int main()
 	system("pause");
 	return 0;
 }
+#endif
+
+//第二种
+void Function(int num)
+{
+	int i;
+	printf("偶数位:");          //从右向左看
+	for (i = 31; i >= 1; i -= 2)
+	{
+		printf("%d ", (num >> i) & 1);
+	}
+	printf("\n");
+	printf("奇数位:");
+	for (i = 30; i >= 0; i -= 2)
+	{
+		printf("%d ", (num >> i) & 1);
+	}
+	printf("\n");
+}
+int main()
+{
+	int num;
+	printf("请输入一个数：");
+	scanf("%d", &num);
+	Function(num);
+	system("pause");
+	return 0;
+}
+
 
 
 3. 输出一个整数的每一位。 
@@ -163,41 +200,69 @@ int main()
 #include<stdio.h>
 #include<stdlib.h>
 
-void to2(int k, int arr[])
-{
-	int i = 0;
-	while (k != 0)
-	{
-		if (k % 2 == 1)
-		{
-			k = k / 2;
-			arr[i++] = 1;
-		}
-		else
-		{
-			k = k / 2;
-			arr[i++]= 0;
-		}
-	}
-}
-
+//第一种
+#if 0
 int main()
 {
-	int arr1[32] = { 0 };
-	int arr2[32] = { 0 };
-	int m,n, j = 0,count=0;
-	printf("请输入两个整数：");
-	scanf("%d %d", &m,&n);
-	to2(m, arr1);
-	to2(n, arr2);
-	for (j = 31; j >= 0; j--)
+	int num = 0, arr[10] = { 0 },i=0;
+	printf("请输入一个整数：");
+	scanf("%d", &num);
+	while (num != 0)
+		{
+			arr[i++] = num % 10;
+			num = num / 10;
+		}
+	printf("该整数从高位到低位依次为：");
+		for(i = i-1; i >= 0;i--)
 	{
-		if (arr1[j] == arr2[j])
-			;
-		else
-			count++;
+			printf("%d ", arr[i]);
 	}
-	printf("count=%d\n", count);
+	system("pause");
+	return 0;
+}
+#endif
+
+
+//第二种
+#if 0
+int CalcDiff(int m, int n)
+{
+	int count = 0;
+	for (int i = 0; i < 32; i++)
+	{
+		count+=((m^n) >> i) & 1;
+	}
+	return count;
+}
+int main()
+{
+	int m, n;
+	printf("Please enter:");
+	scanf("%d %d", &m, &n);
+	printf("%d\n", CalcDiff(m, n));
+	system("pause");
+	return 0;
+}
+#endif
+
+//第三种
+int CalcDiff(int m, int n)
+{
+	int count = 0;
+	int temp = m^n;      //求两个数不一样的位，要进行异或：相同为0不同为1
+	while (temp != 0)       //统计1的个数,有几个1循环几次
+	{
+		temp = temp &(temp - 1);
+		count++;
+	}
+	return count;
+}
+int main()
+{
+	int m, n;
+	printf("Please enter:");
+	scanf("%d %d", &m, &n);
+	printf("%d\n", CalcDiff(m, n));
 	system("pause");
 	return 0;
 }

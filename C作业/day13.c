@@ -5,10 +5,13 @@
 来调整该数组中数字的顺序使得数组中所有的奇数位于数组的前半部分， 
 所有偶数位于数组的后半部分。 
 
+
 #define _CRT_SECURE_NO_WARNINGS 1
 #include<stdio.h>
 #include<stdlib.h>
 
+//第一种
+#if 0
 void swap(int arr[],int sz)
 {
 	int arr1[10] = { 0 };
@@ -32,7 +35,6 @@ void swap(int arr[],int sz)
 		arr[i] = arr1[i];
 	}
 }
-
 int main()
 {
 	int arr[10] = { 0 };
@@ -50,8 +52,63 @@ int main()
 	system("pause");
 	return 0;
 }
+#endif
 
+//第二种
+void Swap_arr(int *arr, int sz)  //int arr[]也可以
+{
+	int left = 0;
+	int right = sz - 1;
+	while (left < right)  //遍历整个数组
+	{
+		while (left < right&&arr[left] % 2 == 1)  //是奇数
+		{
+			left++;
+		}
+		while (left < right&&arr[right] % 2 == 0)  //是偶数
+		{
+			right--;
+		}
+		if (left < right)
+		{
+			int temp = arr[left];
+			arr[left] = arr[right];
+			arr[right]= temp;
+		}
+	}
+}
+void Show_arr(int *arr, int sz)  //int arr[]也可以
+{
+	int i;
+	for (i = 0; i < sz; i++)
+	{
+		printf("%d ", arr[i]);  //*(arr+i)也可以
+	}
+	printf("\n");
+}
+void Init_arr(int arr[], int sz)
+{
+	int i = 0;
+	for (i = 0; i <sz; i++)        //数组赋值1 2 3 4 5 6 7 8 9 10
+		arr[i] = i + 1;
+}
+int main()
+{
+	int arr[10] = { 0 };
+	int sz = sizeof(arr) / sizeof(arr[0]);
+	Init_arr(arr, sz);       //初始化数组
+	printf("原数组：");
+	Show_arr(arr, sz);       //展示数组
 
+	Swap_arr(arr, sz);       //交换内容
+
+	printf("现数组：");
+	Show_arr(arr, sz);
+	system("pause");
+	return 0;
+}		
+		
+		
 2. 
 //杨氏矩阵 
 有一个二维数组. 
@@ -81,7 +138,7 @@ int main()
 #define N 5
 /*
 杨氏矩阵：有一个二维数组，数组的每行从左到右是递增的，每列从上到下是递增的.
-数组的最小值为a[0][0]，最大值为a[n][n]
+数组的最小值为a[0][0]，最大值为a[n-1][n-1]
 在这样的数组中查找一个数字是否存在
 先将要查找的数与数组右上角的数值进行比较，若小于则向左一列查，若大于则向下一行查
 */
@@ -89,8 +146,8 @@ int main()
 int YangSearch(int a[M][N], int key,int *i,int *j)
 {
 	int row = 0, col = N-1;
-	if (key<a[0][0] || key>a[M][N])
-		return -1;
+	if (key<a[0][0] || key>a[M-1][N-1])
+		return -1;       //没有找到
 	while (row < M&& col >= 0)
 	{
 		if (key == a[row][col])
@@ -115,10 +172,11 @@ int main()
 {
 	int a[M][N] = { { 1, 2, 3,4,5 }, { 2, 3, 4,5,6 }, { 3, 4, 5,6,7 } ,\
 	{4, 5, 6, 7, 8}, { 5, 6, 7, 8, 9 } };
-	int key,i=-1,j=-1;
+
+	int key,i=-1,j=-1;    //初始化位置为(-1,-1)
 	printf("Please enter number:");
 	scanf("%d", &key);
-	int ret = YangSearch(a, key,&i, &j);
+	int ret = YangSearch(a, key,&i, &j);  //传&i,&j是为了修改i,j的值
 	if (ret)
 	{
 		printf("查找到%d,它的位置为:a[%d][%d]\n", key, i, j);
@@ -130,3 +188,5 @@ int main()
 	system("pause");
 	return 0;
 }
+		
+
