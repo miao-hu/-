@@ -1,128 +1,104 @@
-2.练习动态内存开辟
-malloc
-calloc
-realloc
-free
-函数
+1.实现strncpy
+
+
+#define _CRT_SECURE_NO_WARNINGS 1
+#include<stdio.h>
+#include<stdlib.h>
+#include<assert.h>
+char *Mystrncpy(char *dest, const char *src,int n)
+{
+	assert(dest);
+	assert(src);
+	char *p = dest;
+	while (n>0)
+	{
+	*dest = *src;
+	dest++;
+	src++;
+	n--;
+	}
+	*dest = '\0';
+	return p;
+	
+	/*
+	char *p = dest;
+	while (n>0 && (*dest++ = *src++))
+	{
+		n--;
+	}
+	return p;
+	*/
+}
+int main()
+{
+	char dest[20] = { 0 };
+	char *src = "abcde";
+	Mystrncpy(dest, src,2);
+	printf("%s\n", dest);
+	system("pause");
+	return 0;
+}
+
+
+2.实现strncat
+
+#define _CRT_SECURE_NO_WARNINGS 1
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+#include<assert.h>
+
+char *Mystrncat(char *dest, const char *src, int n)
+{
+	assert(dest);
+	assert(src);
+	char *p = dest;
+	while (*dest != '\0')
+	{
+		dest++;
+	}
+	while (n>0 &&(*dest++ = *src++))
+	{
+		n--;
+	}
+	return p;
+}
+int main()
+{
+	char dest[20] = "Hello";
+	char *src = "bittttttt";
+	Mystrncat(dest, src,5);
+	printf("%s\n", dest);
+	system("pause");
+	return 0;
+}
+
+
+3.实现strncmp
 
 
 #define _CRT_SECURE_NO_WARNINGS 1
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
-#include<errno.h>
+#include<assert.h>
 
-
-//malloc:
-#if 0
-int main()
+int Mystrncmp(const char *str1, const char *str2, int n)
 {
-	int num = 0;
-	scanf("%d", &num);
-	int *p = (int *)malloc(sizeof(int)*num);
-	if (p != NULL)      //申请成功
+	assert(str1);
+	assert(str2);
+	while (*str1 && *str2 && (*str1 == *str2) && (--n))
 	{
-		int i = 0;
-		for (i = 0; i < num; i++)
-		{
-			p[i] = i;
-		}
+		str1++;
+		str2++;
 	}
-	else    //申请不成功
-	{
-		printf("%d : %s\n", errno, strerror(errno));
-	}
-	free(p);
-	p = NULL;
-	system("pause");
-	return 0;
+	return *str1 - *str2;
 }
-#endif
-
-
-//calloc:
-#if 0
 int main()
 {
-	int num = 0;
-	scanf("%d", &num);
-	int *p = (int *)calloc(num,sizeof(int));
-	if (p != NULL)
-	{
-		int i = 0;
-		for (i = 0; i < num; i++)
-		{
-			p[i] = i;
-		}
-	}
-	else    //申请不成功
-	{
-		printf("%d : %s\n", errno, strerror(errno));
-	}
-	free(p);
-	p = NULL;
-	system("pause");
-	return 0;
-}
-#endif
-
-
-
-//realloc：
-//第一种
-int main()
-{
-	int *ptr = malloc(100);
-	if (ptr != NULL)
-	{
-		;
-	}
-	else
-	{
-		exit(EXIT_FAILURE);
-	}
-	int *p = realloc(ptr, 1000);
-	if (p != NULL)
-	{
-		ptr = p;
-	}
-	else    //申请不成功
-	{
-		printf("%d : %s\n", errno, strerror(errno));
-	}
-	free(ptr);
-	ptr = NULL;
-	system("pause");
-	return 0;
-}
-
-
-
-//第二种
-int main()
-{
-	char *p = malloc(sizeof(char)* 100);
-	if (!p)
-	{
-		printf("malloc error\n");
-		return 1;
-	}
-	memset(p, 'A', sizeof(char)* 100);
-	char *q = realloc(p, sizeof(char)* 50);  //内存变小，指针和原来一样
-	//char *q = realloc(p, sizeof(char)* 1000);  //内存变大
-	//释放原空间，重新开始一大块内存，指针发生变化
-	if (!q)
-	{
-		printf("realloc error\n");
-		return 0;
-	}
-	printf("%p,%p\n",p, q);
-	int i = 0;
-	for (; i < 50; i++)
-	{
-		printf("%c ", p[i]);
-	}
-	free(q);
+	printf("%d\n", Mystrncmp("abcde", "abcdef",3));
+	printf("%d\n", Mystrncmp("abcd", "abca",4));
+	printf("%d\n", Mystrncmp("abcde", "abcdz",5));
 	system("pause");
 	return 0;
 }
