@@ -1,13 +1,24 @@
-public class 打印从1到最大的n位数17 {
-    public int[] printNumbers(int n) {
-        int len=1;
-        while(n!=0){
-            len*=10;
-            n--;
+import java.util.Stack;
+
+class ListNode {
+    int val;
+    ListNode next;
+    ListNode(int x) {
+        val = x;
+    }
+}
+public class 从头到尾打印链表06 {
+    public int[] reversePrint(ListNode head) {
+        Stack<Integer> stack=new Stack<>();
+        int k=0;
+        while(head!=null){
+            stack.push(head.val);
+            k++;
+            head=head.next;
         }
-        int[] arr=new int[len-1];
-        for(int i=0;i<arr.length;i++){
-            arr[i]=i+1;
+        int[] arr=new int[k];
+        for(int i=0;i<k;i++){
+            arr[i]=stack.pop();
         }
         return arr;
     }
